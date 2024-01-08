@@ -20,8 +20,7 @@ const input = Number(
  * @returns output
  */
 const answer = (input) => {
-  if (input === 0) return 1;
-  if (input === 1) return 1;
+  if (input === 0 || input === 1) return 1;
   if (input > 1) return input * answer(input - 1);
 };
 
