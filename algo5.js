@@ -18,14 +18,25 @@ for (let i = 1; i < input.length; i++) {
   inputArr.push(input[i].split(" "));
 }
 
-const answer = (n, m) => {
-  inputArr.map((numberArray) => {
+const answer = (array) => {
+  array.map((numberArray) => {
     const n = numberArray[0];
     const m = numberArray[1];
-    const ans = undefined;
-
+    let ans = recursive(n, m);
     console.log(ans);
   });
 };
 
-return answer(n, m);
+const recursive = (n, m) => {
+  if (n === m) return 1;
+  if (n === 1) return m;
+  if (n !== 1) {
+    let ans = 0;
+    for (let i = 0; i < m - n + 1; i++) {
+      ans += recursive(n - 1, m - 1 - i);
+    }
+    return ans;
+  }
+};
+
+return answer(inputArr);
