@@ -6,9 +6,9 @@
 
 재원이는 서쪽의 사이트와 동쪽의 사이트를 다리로 연결하려고 한다. (이때 한 사이트에는 최대 한 개의 다리만 연결될 수 있다.) 재원이는 다리를 최대한 많이 지으려고 하기 때문에 서쪽의 사이트 개수만큼 (N개) 다리를 지으려고 한다. 다리끼리는 서로 겹쳐질 수 없다고 할 때 다리를 지을 수 있는 경우의 수를 구하는 프로그램을 작성하라.
 
-리뷰 : 
+리뷰 : 어려웠다... 이런 문제를 어떻게 빨리 푸나 싶다.
 
-풀이과정 중 에러사항 : 
+풀이과정 중 에러사항 : 타입에러가 있었다. 문자열과 숫자를 혼용하게 되는 문제가 있었던 것 같다.
 */
 
 const fs = require("fs");
@@ -18,117 +18,42 @@ for (let i = 1; i < input.length; i++) {
   inputArr.push(input[i].split(" "));
 }
 
-var answer = (array) => {
-  const ans = [];
-
+const answer = (array) => {
   array.map((numberArray) => {
-    const n = numberArray[0];
-    const m = numberArray[1];
+    const n = +numberArray[0];
+    const m = +numberArray[1];
 
-    const dp = Array.from(Array(30), () => Array(30).fill(0));
-    for (let i = 1; i <= n; i++) {
-      const indexI = i - 1;
-      for (let j = 1; j <= m; j++) {
-        const indexJ = j - 1;
-        // 최초 배열 추가
-        if (j === 1) dp.push([]);
-        // 동쪽이 서쪽보다 작으면 넘김
-        if (i > j) {
-          dp[indexI][indexJ] = 0;
-          continue;
-        }
-        // 서로 같으면 하나일 수박에 없음
-        if (i === j) dp[indexI][indexJ] = 1;
-
-        if (i < j) {
-          // i 가 1이면
-          if (i === 1) dp[indexI][indexJ] = j;
-          if (i !== 1) {
-            dp[indexI][indexJ] =
-              dp[indexI][indexJ - 1] + dp[indexI - 1][indexJ - 1];
-          }
-        }
-
-        if (i === n && j === m) {
-          console.log(dp[indexI][indexJ]);
-        }
-      }
-    }
+    dpFunc(n, m);
   });
 };
 
-// const recursive = (n, m) => {
-//   if (n === m) return 1;
-//   if (n === 1) return m;
-//   if (n !== 1) {
-//     let ans = 0;
-//     for (let i = 0; i < m - n + 1; i++) {
-//       ans += recursive(n - 1, m - 1 - i);
-//     }
-//     return ans;
-//   }
-// };
+var dpFunc = (n, m) => {
+  const dp = Array.from(Array(30), () => Array(30).fill(0));
+  for (let i = 1; i <= n; i++) {
+    const indexI = i - 1;
+    for (let j = 1; j <= m; j++) {
+      const indexJ = j - 1;
 
-// var dpFunc = (n, m) => {
-//   const dp = Array.from(Array(30), () => Array(30).fill(0));
-//   for (let i = 1; i <= n; i++) {
-//     const indexI = i - 1;
-//     for (let j = 1; j <= m; j++) {
-//       const indexJ = j - 1;
-//       // 최초 배열 추가
-//       if (j === 1) dp.push([]);
-//       // 동쪽이 서쪽보다 작으면 넘김
-//       if (i > j) {
-//         dp[indexI][indexJ] = 0;
-//         continue;
-//       }
-//       // 서로 같으면 하나일 수박에 없음
-//       if (i === j) dp[indexI][indexJ] = 1;
+      if (i > j) {
+        dp[indexI][indexJ] = 0;
+      }
 
-//       if (i < j) {
-//         // i 가 1이면
-//         if (i === 1) dp[indexI][indexJ] = j;
-//         if (i !== 1) {
-//           dp[indexI][indexJ] =
-//             dp[indexI][indexJ - 1] + dp[indexI - 1][indexJ - 1];
-//         }
-//       }
+      if (i === j) dp[indexI][indexJ] = 1;
 
-//       if (i === n && j === m) {
-//         return dp[indexI][indexJ];
-//       }
-//     }
-//   }
-// };
+      if (i < j) {
+        // i 가 1이면
+        if (i === 1) dp[indexI][indexJ] = j;
+        if (i !== 1) {
+          dp[indexI][indexJ] =
+            dp[indexI][indexJ - 1] + dp[indexI - 1][indexJ - 1];
+        }
+      }
+
+      if (i === n && j === m) {
+        return console.log(dp[indexI][indexJ]);
+      }
+    }
+  }
+};
 
 answer(inputArr);
-
-// const fs = require("fs");
-// const [n, ...arr] = fs
-//   .readFileSync("./dev/stdin")
-//   .toString()
-//   .trim()
-//   .split("\n");
-
-// arr
-//   .map((v) => v.split(" ").map((x) => +x))
-//   .forEach((y) => {
-//     bridge(y[0], y[1]);
-//   });
-
-// function bridge(k, n) {
-//   let dp = Array.from(Array(n + 1), () => new Array(n + 1).fill(0));
-
-//   dp[0][0] = 1;
-//   dp[1][0] = 1;
-//   dp[1][1] = 1;
-
-//   for (let i = 2; i <= n; i++) {
-//     for (let j = 0; j <= i; j++) {
-//       if (j == 0 || j == i) {
-//         dp[i][j] = 1;
-//       } else dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
-//     }
-//   }
-//   console.log(dp[n][k]);
-// }
