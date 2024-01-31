@@ -13,6 +13,8 @@ A와 B의 길이가 다르면, 짧은 것이 먼저 온다.
 
 # 메모
 
+어떻게 sorting을 해야할지 바로 떠오르지가 않는다.
+
 # 링크
 
 https://www.acmicpc.net/problem/1431
