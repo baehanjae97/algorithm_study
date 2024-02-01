@@ -25,7 +25,7 @@ const happyChristmas = () => {
   }
 
   let lastMsg = "                 ";
-  console.log(lastMsg + "Stay With Me Forever Sunny ");
+  console.log(lastMsg + "Stay With Me Forever Sunny!! ");
 };
 
 const sleep = (ms) => {
